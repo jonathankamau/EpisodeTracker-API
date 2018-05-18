@@ -8,10 +8,10 @@ services:
       - "80:80"
     volumes:
       - .:/code
-      - ./nginx:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
-      - dev
-  dev: 
+      - staging
+  staging: 
     build:
       context: ../../
       dockerfile: docker/dev/Dockerfile
@@ -23,7 +23,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    command: /dev.sh
+    command: /staging.sh
     ports:
       - "8000:8000"      
 

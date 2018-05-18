@@ -8,7 +8,7 @@ services:
       - "80:80"
     volumes:
       - .:/code
-      - ./nginx:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - dev
   dev: 
@@ -23,7 +23,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    command: /dev.sh
+    command: /prod.sh
     ports:
       - "8000:8000"      
 

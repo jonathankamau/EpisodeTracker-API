@@ -4,11 +4,15 @@ ORG_NAME ?= episode-tracker
 # File names
 DOCKER_TEST_COMPOSE_FILE := docker/test/docker-compose.yml
 DOCKER_DEV_COMPOSE_FILE := docker/dev/docker-compose.yml
+DOCKER_STG_COMPOSE_FILE := docker/staging/docker-compose.yml
+DOCKER_PROD_COMPOSE_FILE := docker/prod/docker-compose.yml
 
 # Docker compose project names
 DOCKER_TEST_PROJECT := "$(PROJECT_NAME)test"
 DOCKER_DEV_PROJECT := "$(PROJECT_NAME)dev"
-APP_SERVICE_NAME := dev
+DOCKER_STG_PROJECT := "$(PROJECT_NAME)stg"
+DOCKER_PROD_PROJECT := "$(PROJECT_NAME)prod"
+APP_SERVICE_NAME := stg
 DOCKER_REGISTRY ?= gcr.io
 
 # Repository Filter
@@ -37,13 +41,29 @@ env_file:
 	@ chmod +x scripts/utils.sh && scripts/utils.sh addEnvFile
 	@ echo " "
 
-## Build project image
+## Build project image on development environment
 dev:env_file
 	${INFO} "Building required container image for the application"
 	@ echo " "
 	@ docker-compose -p $(DOCKER_DEV_PROJECT) -f $(DOCKER_DEV_COMPOSE_FILE) build dev
 	@ docker-compose -p $(DOCKER_DEV_PROJECT) -f $(DOCKER_DEV_COMPOSE_FILE) up dev
-	@ docker-compose -p $(DOCKER_DEV_PROJECT) -f $(DOCKER_DEV_COMPOSE_FILE) run -d dev
+	@ docker-compose -p $(DOCKER_DEV_PROJECT) -f $(DOCKER_DEV_COMPOSE_FILE) run --name nginx_server -d nginx
+
+## Build project image on staging environment
+staging:env_file
+	${INFO} "Building required container image for the application"
+	@ echo " "
+	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) build dev
+	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) up dev
+	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) run --name nginx_server -d nginx
+
+## Build project image on production environment
+prod:env_file
+	${INFO} "Building required container image for the application"
+	@ echo " "
+	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) build dev
+	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) up dev
+	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) run --name nginx_server -d nginx
 	
 ## Tag the project image
 tag:
@@ -75,7 +95,7 @@ RESET  := $(shell tput -Txterm sgr0)
 INFO := @bash -c 'printf $(YELLOW); echo "===> $$1"; printf $(NC)' SOME_VALUE
 SUCCESS := @bash -c 'printf $(GREEN); echo "===> $$1"; printf $(NC)' SOME_VALUE
 
-APP_CONTAINER_ID := $$(docker-compose -p $(DOCKER_REL_PROJECT) -f $(DOCKER_REL_COMPOSE_FILE) ps -q $(APP_SERVICE_NAME))
+APP_CONTAINER_ID := $$(docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) ps -q $(APP_SERVICE_NAME))
 
 IMAGE_ID := $$(docker inspect -f '{{ .Image }}' $(APP_CONTAINER_ID))
 
