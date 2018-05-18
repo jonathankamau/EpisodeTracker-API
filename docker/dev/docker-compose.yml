@@ -1,0 +1,42 @@
+version: '2.1'
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/code
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - dev
+  dev: 
+    build:
+      context: ../../
+      dockerfile: docker/dev/Dockerfile
+    links:
+      - database
+    environment:
+      DJANGO_SETTINGS_MODULE: settings
+      DEV_DATABASE: postgresql://postgres:postgres@database:5432/episodetracker
+    depends_on:
+      database:
+        condition: service_healthy
+    command: /dev.sh
+    ports:
+      - "8000:8000"      
+
+  database:
+    image: postgres
+    restart: always
+    expose:
+      - "5432"
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: episodetracker
+        POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
