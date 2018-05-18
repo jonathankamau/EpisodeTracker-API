@@ -53,16 +53,16 @@ dev:env_file
 staging:env_file
 	${INFO} "Building required container image for the application"
 	@ echo " "
-	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) build dev
-	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) up dev
+	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) build staging
+	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) up staging
 	@ docker-compose -p $(DOCKER_STG_PROJECT) -f $(DOCKER_STG_COMPOSE_FILE) run --name nginx_server -d nginx
 
 ## Build project image on production environment
 prod:env_file
 	${INFO} "Building required container image for the application"
 	@ echo " "
-	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) build dev
-	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) up dev
+	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) build prod
+	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) up prod
 	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) run --name nginx_server -d nginx
 	
 ## Tag the project image

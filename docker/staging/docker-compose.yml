@@ -14,7 +14,7 @@ services:
   staging: 
     build:
       context: ../../
-      dockerfile: docker/dev/Dockerfile
+      dockerfile: docker/staging/Dockerfile
     links:
       - database
     environment:

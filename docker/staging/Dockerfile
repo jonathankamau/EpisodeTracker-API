@@ -10,6 +10,6 @@ WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY src /code
-COPY scripts/dev.sh /dev.sh
-RUN sed -i 's/\r//' /dev.sh \
-    && chmod +x /dev.sh
+COPY scripts/staging.sh /staging.sh
+RUN sed -i 's/\r//' /staging.sh \
+    && chmod +x /staging.sh
