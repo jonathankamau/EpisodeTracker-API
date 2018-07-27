@@ -7,7 +7,7 @@ LABEL application="Episode Tracker"
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
-ADD requirements.txt /code/
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY src /code
 COPY scripts/staging.sh /staging.sh
