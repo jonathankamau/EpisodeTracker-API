@@ -1,1 +1,3 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/26d4663ca6294e249336bd23a24abc6e)](https://www.codacy.com/project/jonathankamau/EpisodeTracker-API/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jonathankamau/EpisodeTracker-API&amp;utm_campaign=Badge_Grade_Dashboard)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ba0dcc23849921ad710a/maintainability)](https://codeclimate.com/github/jonathankamau/EpisodeTracker-API/maintainability)
 ### Episode Tracker

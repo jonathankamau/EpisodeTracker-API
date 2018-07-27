@@ -10,8 +10,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class UserProfile(BaseModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+class UserProfile(BaseModel, User):
     profile_image = models.ImageField(blank=True)
 
     class Meta:

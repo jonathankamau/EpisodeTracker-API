@@ -25,7 +25,9 @@ services:
         condition: service_healthy
     command: /dev.sh
     ports:
-      - "8000:8000"      
+      - "8000:8000"   
+    stdin_open: true
+    tty: true   
 
   database:
     image: postgres
