@@ -8,8 +8,9 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
+COPY .git /code
 COPY src /code
+RUN pip install -r requirements.txt
 COPY scripts/test.sh /test.sh
 RUN sed -i 's/\r//' /test.sh \
     && chmod +x /test.sh
