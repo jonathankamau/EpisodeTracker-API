@@ -65,6 +65,24 @@ prod:env_file
 	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) up prod
 	@ docker-compose -p $(DOCKER_PROD_PROJECT) -f $(DOCKER_PROD_COMPOSE_FILE) run --name nginx_server -d nginx
 	
+## Run project test cases
+test:env_file
+	${INFO} "Creating cache docker volume"
+	@ echo " "
+	@ docker volume create --name=cache > /dev/null
+	${INFO} "Building required docker images for testing"
+	@ echo " "
+	@ docker-compose -p $(DOCKER_TEST_PROJECT) -f $(DOCKER_TEST_COMPOSE_FILE) build --pull test
+	${INFO} "Build Completed successfully"
+	@ echo " "
+	@ ${INFO} "Running tests in docker container"
+	@ docker-compose -p $(DOCKER_TEST_PROJECT) -f $(DOCKER_TEST_COMPOSE_FILE) up test
+	${INFO}"Copying test coverage reports"
+	@ bash -c 'if [ -d "test-reports" ]; then rm -Rf test-reports; fi'
+	@ docker cp $$(docker-compose -p $(DOCKER_TEST_PROJECT) -f $(DOCKER_TEST_COMPOSE_FILE) ps -q test):/application/htmlcov test-reports
+	@ ${INFO} "Cleaning workspace after test"
+	@ docker-compose -p $(DOCKER_TEST_PROJECT) -f $(DOCKER_TEST_COMPOSE_FILE) down -v
+
 ## Tag the project image
 tag:
 	${INFO} "Tagging release image with tags $(TAG_ARGS)..."
