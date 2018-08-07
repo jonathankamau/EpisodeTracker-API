@@ -102,3 +102,6 @@ ENV/
 
 # VS Code files
 .vscode/
+
+# pytest cache
+.pytest_cache/

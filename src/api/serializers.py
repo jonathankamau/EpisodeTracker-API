@@ -1,4 +1,4 @@
-from episodetrackerapp.models import UserProfile, MySeries, LoggedEpisodes
+from api.models import UserProfile, MySeries, LoggedEpisodes
 from rest_framework.validators import UniqueTogetherValidator
 from rest_framework import serializers
 

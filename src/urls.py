@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from rest_framework import routers
-from episodetrackerapp.views.register_view import RegisterUser
+from api.views.register_view import RegisterUser
 import settings
 
 api_router = routers.DefaultRouter(trailing_slash=False)

@@ -2,8 +2,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from episodetrackerapp.models import UserProfile
-from episodetrackerapp.serializers import UserSerializer
+from api.models import UserProfile
+from api.serializers import UserSerializer
 
 
 class RegisterUser(viewsets.ViewSet):

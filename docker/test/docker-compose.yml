@@ -8,8 +8,9 @@ services:
     links:
       - database
     environment:
-      DJANGO_SETTINGS_MODULE: settings
-      DEV_DATABASE: postgresql://postgres:postgres@database:5432/test-episodetracker
+        POSTGRES_USER: postgres
+        POSTGRES_DB: test-episodetracker
+        POSTGRES_PASSWORD: postgres
     depends_on:
       database:
         condition: service_healthy
@@ -22,12 +23,12 @@ services:
   database:
     image: postgres
     restart: always
-    expose:
-      - "5432"
     environment:
         POSTGRES_USER: postgres
         POSTGRES_DB: test-episodetracker
         POSTGRES_PASSWORD: postgres
+    expose:
+      - "5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

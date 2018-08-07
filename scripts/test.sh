@@ -1,6 +1,10 @@
 #!/bin/bash
+echo "Making Migrations..."
+python /application/manage.py makemigrations
+echo "Running Migrations..."
+python /application/manage.py migrate
 echo "Running tests..."
-coverage run -m pytest -v
+python manage.py test
 echo "Generating Covarage..."
 coverage html
 echo "Submitting Coverage to Coveralls..."

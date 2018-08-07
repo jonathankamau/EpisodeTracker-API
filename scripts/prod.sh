@@ -1,5 +1,5 @@
 #!/bin/bash
-cho "Making Migrations..."
+echo "Making Migrations..."
 python /code/manage.py makemigrations
 echo "Running Migrations..."
 python /code/manage.py migrate
