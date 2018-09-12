@@ -30,8 +30,8 @@ Django (2.0.5)
 3. Navigate to project directory
     
     
-      		$ cd cp2-bucketlist-application
-      		$ git checkout development
+      		$ cd EpisodeTracker-API
+      		$ git checkout develop
 
 4. Run the following commmand:
 
